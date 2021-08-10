@@ -324,8 +324,8 @@ generate_cert() {
   NEW_CERT_HASH=$(get_cert_hash "${DOMAIN_FOLDER}")
   debug "new cert hash: ${NEW_CERT_HASH}"
 
-  # update secrets only if certs has been updated
-  if [ "${CURRENT_CERT_HASH}" != "${NEW_CERT_HASH}" ]; then
+  # update secrets if either certs has been updated or current cert is empty
+  if [ "${CURRENT_CERT_HASH}" != "${NEW_CERT_HASH}" ] || [ "${CURRENT_CERT_HASH}" = "" ]; then
     info "Certificate change, updating..."
     add_certs_to_secret "${CERT_NAMESPACE}"
     add_conf_to_secret "${CERT_NAMESPACE}" "${DOMAIN_FOLDER}"
@@ -386,13 +386,20 @@ load_conf_from_secret() {
   debug "Status code: ${STATUS_CODE}"
 
   if [ "${STATUS_CODE}" = "200" ]; then
-    info "Adding conf"
-    IS_SECRET_CONF_ALREADY_EXISTS="true"
     format_res_file "${RES_FILE}"
-    local TMP_TAR_FILE=$(mktemp /tmp/tar_file.XXXX)
-    cat ${RES_FILE} | jq -r '.data.conf' | base64 -d > "${TMP_TAR_FILE}"
-    tar -xf "${TMP_TAR_FILE}" -C /
-    rm -f "${TMP_TAR_FILE}"
+    local DATA_EXISTS=$(cat $RES_FILE | jq --exit-status '.data' >/dev/null)
+    IS_SECRET_CONF_ALREADY_EXISTS="true"
+
+    if [ $DATA_EXISTS ]; then
+      info "Adding conf"
+      local TMP_TAR_FILE=$(mktemp /tmp/tar_file.XXXX)
+      cat ${RES_FILE} | jq -r '.data.conf' | base64 -d > "${TMP_TAR_FILE}"
+      tar -xf "${TMP_TAR_FILE}" -C /
+      rm -f "${TMP_TAR_FILE}"
+    else
+      info "Conf secret missing data, configuration not loaded"
+    fi
+    
   else
     info "Invalid status code found: ${STATUS_CODE}, configuration not loaded"
   fi
