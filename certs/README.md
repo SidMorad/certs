@@ -32,13 +32,20 @@ manageAllNamespaces | `false` | Whether or not `certs` should manage all namespa
 debug | `false` | Display more logs when value is set to `"true"`.
 failedJobsHistoryLimit | `1` | Specify how many failed jobs should be kept.
 env | `[]` | List all environment variables needed to run a `acme.sh` dns validation for certificate renew.
-secretResourceNames | `[]` | Limit Role/ClusterRole access to a list of secrets. This should be a list of tls secrets used by ingress resources.
+secretResourceNames | `[]` | Limit Role/ClusterRole access to a list of secrets. This should be a list of tls secrets used by ingress resources *
 demo.enabled | `false` | Enable a demo backend for test purpose.
 demo.image | `mathnao/light-test-server` | Set the docker image to use for the demo backend
 demo.service.type | `ClusterIP` | Set the service type for the demo backend
 demo.service.port | `8080` | Set the service port for the demo backend
 demo.secretName | `demo-ingress-cert` | Set the secret name for storing generated certificates
 demo.hosts | `- "example.com"` | Set the list of your hosts to generate Let's Encrypt certificate
+
+\* When limiting access to secret resources by name, all secrets must be created before running. For each tls secretName, a corresponding conf secret is required. For example, if your ingress uses
+```yaml
+tls:
+  - secretName: my-secret
+```
+certs requires two empty secrets `my-secret` and `my-secret-conf`.
 
 ## Deployment example
 
