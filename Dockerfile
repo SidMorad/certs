@@ -1,4 +1,4 @@
-FROM neilpang/acme.sh:latest
+FROM neilpang/acme.sh:2.9.0
 
 WORKDIR /root/
 
