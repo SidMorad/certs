@@ -486,10 +486,9 @@ load_conf_from_secret() {
 
   if [ "${STATUS_CODE}" = "200" ]; then
     format_res_file "${RES_FILE}"
-    local DATA_EXISTS=$(cat $RES_FILE | jq --exit-status '.data' >/dev/null)
     IS_SECRET_CONF_ALREADY_EXISTS="true"
 
-    if [ $DATA_EXISTS ]; then
+    if [ cat $RES_FILE | jq -e '.data' > /dev/null ]; then
       info "Adding conf"
       local TMP_TAR_FILE=$(mktemp /tmp/tar_file.XXXX)
       cat ${RES_FILE} | jq -r '.data.conf' | base64 -d > "${TMP_TAR_FILE}"
