@@ -16,7 +16,7 @@ helm lint certs
 
 charts_dir="charts"
 build_dir="build"
-registry="mathnao"
+registry="preg.taakcloud.com"
 
 mkdir -p "${charts_dir}" "${build_dir}"
 
@@ -30,7 +30,7 @@ sed -E -i '' "s/(CERTS_VERSION)=.*$/\1=${version}/g" Dockerfile
 
 helm package --debug --destination "${build_dir}" certs
 
-helm repo index "${build_dir}" --url "https://math-nao.github.io/certs/${charts_dir}" --merge "${charts_dir}/index.yaml"
+helm repo index "${build_dir}" --url "https://sidmorad.github.io/certs/${charts_dir}" --merge "${charts_dir}/index.yaml"
 
 mv -f "${build_dir}/index.yaml" "${charts_dir}"
 mv -f "${build_dir}/"certs-*.tgz "${charts_dir}"

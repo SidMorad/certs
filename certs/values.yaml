@@ -6,9 +6,9 @@ service:
   type: None
 
 image:
-  registry: mathnao
+  registry: preg.taakcloud.com
   repository: certs
-  tag: 1.1.12
+  tag: 1.1.13
 
 schedule: "0 0,12 * * *"
 
