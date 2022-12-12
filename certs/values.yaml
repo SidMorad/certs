@@ -6,9 +6,9 @@ service:
   type: None
 
 image:
-  registry: preg.taakcloud.com
+  registry: quay.io/taakcloud
   repository: certs
-  tag: 1.1.13
+  tag: 1.1.14
 
 schedule: "0 0,12 * * *"
 

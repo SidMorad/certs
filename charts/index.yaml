@@ -4,6 +4,27 @@ entries:
   - annotations:
       category: Security
     apiVersion: v1
+    created: "2022-12-12T06:15:48.214897Z"
+    description: A Helm chart for managing Let's encrypt certificates
+    digest: 0a268ea6f798c6f4e9718ae2eff9ba0031fbdfd52c19b946644dd3f7ddd62b02
+    home: https://github.com/math-nao/certs
+    icon: https://sidmorad.github.io/certs/icon.svg
+    keywords:
+    - letsencrypt
+    - certificat
+    - ssl
+    - tls
+    - acme
+    - security
+    name: certs
+    sources:
+    - https://github.com/math-nao/certs
+    urls:
+    - https://sidmorad.github.io/certs/charts/certs-1.1.14.tgz
+    version: 1.1.14
+  - annotations:
+      category: Security
+    apiVersion: v1
     created: "2022-05-30T09:48:19.071359Z"
     description: A Helm chart for managing Let's encrypt certificates
     digest: 39186e3c9f8a606180d3758dae351837229cefe466bcddddf2933eb0219c732a
@@ -224,4 +245,4 @@ entries:
     urls:
     - https://sidmorad.github.io/certs/charts/certs-1.0.0.tgz
     version: 1.0.0
-generated: "2022-05-30T09:48:19.070973Z"
+generated: "2022-12-12T06:15:48.213384Z"

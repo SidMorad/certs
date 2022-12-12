@@ -16,7 +16,7 @@ helm lint certs
 
 charts_dir="charts"
 build_dir="build"
-registry="preg.taakcloud.com"
+registry="quay.io/taakcloud"
 
 mkdir -p "${charts_dir}" "${build_dir}"
 
